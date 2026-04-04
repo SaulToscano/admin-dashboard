@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css"; /* Ahora sí funcionará */
+
+:root {
+  --primary-color: #B95FFF;
+  --active-color: #77EE52;
+  --inactive-color: #EE2929;
+  --warning-color: #ffcc00;
+  --marketing: #52EEEE;
+  --contabilidad: #B052EE;
+  --font-family: 'Open Sans', sans-serif;
+}
+
+html {
+  font-family: var(--font-family);
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  background: light-dark(var(--p-surface-0), var(--p-surface-950));
+  font-family: var(--font-family);
+  
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
