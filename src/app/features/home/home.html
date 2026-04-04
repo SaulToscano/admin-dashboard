@@ -1,1 +1,28 @@
-<p>home works!</p>
+<p-toast />
+<section style="display: flex; gap: 10px;">
+
+  <div style="width: 50%;">
+    <p-card >
+      <ng-template pTemplate="header">
+        <h2 class="dialog-header">Ventas</h2>
+      </ng-template>
+
+      <div style="margin: 1rem;">
+        <p-datepicker placeholder="Busqueda por fechas" [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" (ngModelChange)="dateChangeHandler()" />
+      </div>
+
+      <p-chart type="doughnut" [data]="pieChart" [options]="pieChartOptions" style="height: 300px" />
+    </p-card>
+  </div>
+
+  <div style="width: 50%;">
+    <p-card>
+      <ng-template pTemplate="header">
+        <h2 class="dialog-header">Movimientos</h2>
+      </ng-template>
+
+      <p-chart type="line" [data]="lineChart" [options]="lineChartOptions" />
+    </p-card>
+  </div>
+
+</section>
