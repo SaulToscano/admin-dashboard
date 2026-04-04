@@ -1,6 +1,7 @@
 :host {
   display: block;
   transition: width 0.3s ease;
+  height: 100%;
 }
 
 :host(.collapsed) .menu-item.logout button span {

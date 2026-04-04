@@ -34,7 +34,7 @@ import { SidebarComponent } from './sidebar/sidebar';
     }
 
     @if (showLayout) {
-      <header class="flex align-items-center justify-content-between px-5 py-3 surface-card shadow-1">
+      <header class="flex align-items-center justify-content-between px-5 py-3 surface-card shadow-1 relative z-5">
         <div class="flex align-items-center gap-3">
            <h2 class="m-0 font-semibold text-xl">Admin Dashboard</h2>
         </div>
@@ -48,17 +48,21 @@ import { SidebarComponent } from './sidebar/sidebar';
         </div>
       </header>
 
-      <div class="layout-container flex">
-        <app-sidebar #sidebar [class.collapsed]="sidebarCollapsed"></app-sidebar>
+      <div class="layout-container flex p-4 gap-4 surface-ground">
         
-        <main class="flex-1 p-4 surface-ground transition-all transition-duration-300">
+        <p-card class="h-full shadow-2 border-none p-0 overflow-visible" class="sidebar-card">
+           <app-sidebar #sidebar [class.collapsed]="sidebarCollapsed"></app-sidebar>
+        </p-card>
+        
+        <main class="flex-1 transition-all transition-duration-300">
            <p-card class="h-full shadow-2 border-none">
               <router-outlet></router-outlet>
            </p-card>
         </main>
+        
       </div>
     } @else {
-      <main class="surface-ground min-h-screen">
+      <main class="surface-ground min-h-screen flex align-items-center justify-content-center">
         <router-outlet></router-outlet>
       </main>
     }
@@ -68,13 +72,27 @@ import { SidebarComponent } from './sidebar/sidebar';
     </footer>
   `,
   styles: [`
-    .layout-container { min-height: calc(100vh - 75px); }
+    .layout-container { 
+      min-height: calc(100vh - 75px - 50px); 
+      box-sizing: border-box;
+    }
+    
     .loading-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(255, 255, 255, 0.8); display: flex;
       align-items: center; justify-content: center; z-index: 9999;
     }
-    header { height: 75px; z-index: 1000; position: relative; }
+    
+    header { height: 75px; z-index: 1000; }
+
+    ::ng-deep .sidebar-card .p-card-body {
+      padding: 0 !important;
+      height: 100%;
+    }
+    ::ng-deep .sidebar-card .p-card-content {
+      padding: 0 !important;
+      height: 100%;
+    }
   `],
 })
 export class AppComponent implements OnInit {
