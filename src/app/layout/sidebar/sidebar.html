@@ -1,16 +1,14 @@
-<div class="sidebar-wrapper flex flex-column h-full surface-card border-right-1 surface-border p-3">
+<div class="sidebar-wrapper relative flex flex-column h-full surface-card border-right-1 surface-border p-3">
   
-  <div class="flex justify-content-center mb-4">
-     <app-sidebar-toggle-button (sidebarToggled)="toggleSidebar()" />
-  </div>
+  <app-sidebar-toggle-button (sidebarToggled)="toggleSidebar()" [isCollapsed]="collapsed" />
 
-  <div class="flex flex-column gap-2 flex-1">
+  <div class="flex flex-column gap-2 flex-1 mt-3">
     @if (isAdmin()) {
       <a routerLink="/" 
          routerLinkActive="active-link" 
          [routerLinkActiveOptions]="{ exact: true }"
-         class="flex align-items-center p-3 border-round text-700 hover:surface-100 transition-duration-200 no-underline">
-        <i class="pi pi-objects-column mr-3 text-xl"></i>
+         class="flex align-items-center p-3 border-round text-700 hover:surface-100 transition-duration-200 no-underline"
+         [ngClass]="{'justify-content-center': collapsed}"> <i class="pi pi-objects-column text-xl" [class.mr-3]="!collapsed"></i> 
         @if (!collapsed) { <span class="font-medium">Home</span> }
       </a>
     }
@@ -19,8 +17,8 @@
       @for (item of filteredMenuItems; track item.label) {
         <a [routerLink]="item.routerLink" 
            routerLinkActive="active-link"
-           class="flex align-items-center p-3 border-round text-700 hover:surface-100 transition-duration-200 no-underline">
-          <i [ngClass]="item.icon" class="mr-3 text-xl"></i>
+           class="flex align-items-center p-3 border-round text-700 hover:surface-100 transition-duration-200 no-underline"
+           [ngClass]="{'justify-content-center': collapsed}"> <i [ngClass]="item.icon" class="text-xl" [class.mr-3]="!collapsed"></i>
           @if (!collapsed) { <span class="font-medium">{{ item.label }}</span> }
         </a>
       }
@@ -38,8 +36,8 @@
       @for (item of filteredAdminMenuItems; track item.label) {
         <a [routerLink]="item.routerLink" 
            routerLinkActive="active-link"
-           class="flex align-items-center p-3 border-round text-700 hover:surface-100 transition-duration-200 no-underline">
-          <i [ngClass]="item.icon" class="mr-3 text-xl"></i>
+           class="flex align-items-center p-3 border-round text-700 hover:surface-100 transition-duration-200 no-underline"
+           [ngClass]="{'justify-content-center': collapsed}"> <i [ngClass]="item.icon" class="text-xl" [class.mr-3]="!collapsed"></i>
           @if (!collapsed) { <span class="font-medium">{{ item.label }}</span> }
         </a>
       }
@@ -49,8 +47,8 @@
   <div class="mt-auto pt-3 border-top-1 surface-border">
     <button pButton 
             (click)="logout()" 
-            class="p-button-danger p-button-text w-full flex justify-content-start px-3">
-      <i class="pi pi-sign-out mr-3 text-xl"></i>
+            class="p-button-danger p-button-text w-full flex px-3"
+            [ngClass]="collapsed ? 'justify-content-center' : 'justify-content-start'"> <i class="pi pi-sign-out text-xl" [class.mr-3]="!collapsed"></i>
       @if (!collapsed) { <span class="font-medium">Cerrar sesión</span> }
     </button>
   </div>

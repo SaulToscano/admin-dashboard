@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -11,10 +11,9 @@ import { ButtonModule } from 'primeng/button';
 })
 export class SidebarToggleButtonComponent {
   @Output() sidebarToggled = new EventEmitter<void>();
-  isCollapsed = false;
+  @Input() isCollapsed = false;
 
   toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
     this.sidebarToggled.emit();
   }
 }

@@ -1,27 +1,11 @@
-/* .toggle-btn {
-  width: 2rem;
-  height: 2rem;
+:host {
   position: absolute;
-  top: -2rem;
-  left: 12rem;
-  background-color: #FFF;
-  color: var(--primary-color);
-  border: none;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: -1px 11px 25px -9px rgba(0,0,0,0.75);
--webkit-box-shadow: -1px 11px 25px -9px rgba(0,0,0,0.75);
--moz-box-shadow: -1px 11px 25px -9px rgba(0,0,0,0.75);
+  top: 0rem;
+  right: 0;
+  transform: translateX(50%);
+  z-index: 100;
 }
 
-.toggle-btn:hover {
-  background-color: var(--primary-color);
-  color: white;
+button {
+  background-color: var(--p-surface-0) !important; 
 }
-
-.collapsed {
-  left: 4rem !important;
-}
- */

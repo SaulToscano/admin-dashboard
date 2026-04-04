@@ -12,28 +12,13 @@
 }
 
 :host(.collapsed) .sidebar {
-  width: 60px;  /* Ajusta el tamaño de la sidebar cuando esté colapsada */
+  width: 60px;
   padding: 1rem 0;
 }
 
-:host(.collapsed) .menu-item span {
-  display: none;  /* Oculta el texto cuando la sidebar está colapsada */
-}
-
-:host(.collapsed) .menu-item i {
-  margin-right: 0px; /* Eliminar el margen del icono cuando la sidebar está colapsada */
-}
-
-.sidebar {
-  /* width: 250px; */
-  /* background-color: #f4f4f4; */
-  min-height: 100vh;
-  padding: 1rem;
-}
-
 .active-link {
-  background-color: var(--p-primary-50) !important; // Fondo suave morado/azul del tema
-  color: var(--p-primary-600) !important; // Texto color primario
+  background-color: var(--p-primary-50) !important;
+  color: var(--p-primary-600) !important;
   
   i {
     color: var(--p-primary-600) !important;
