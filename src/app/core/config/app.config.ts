@@ -16,6 +16,9 @@ import { routes } from '@/app/app.routes';
 import { HomeApiService } from '@core/services/home-api.service';
 import { HomeGateway } from '@domain/models/home/gateway/home-gateway';
 
+import { UserApiService } from '@core/services/user-api.service';
+import { UserGateway } from '@domain/models/user/gateway/user-gateway';
+
 export interface AppConfig {
   apiBaseUrl: string;
   environment: string;
@@ -52,5 +55,6 @@ export const appConfig: ApplicationConfig = {
     },
     // features providers
     { provide: HomeGateway, useClass: HomeApiService },
+    { provide: UserGateway, useClass: UserApiService },
   ],
 };
