@@ -5,10 +5,10 @@ import { Observable, throwError } from 'rxjs';
 import { APP_CONFIG, AppConfig } from '../config/app.config';
 import { LoggerService } from '../logger/logger.service';
 
-import { LineChart, PieChart } from '@domain/models/home/chart';
+import { BarChart, DashboardKpis, LineChart, PieChart } from '@domain/models/home/chart';
 import { HomeGateway } from '@domain/models/home/gateway/home-gateway';
 
-import { lineChart, pieChart } from 'public/mockups/charts';
+import { barChart, dashboardKpis, lineChart, pieChart } from 'public/mockups/charts';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +51,21 @@ export class HomeApiService extends HomeGateway {
       observer.next(pieChart);
       observer.complete();
     })
+  }
+
+  getBarChart(): Observable<BarChart> {
+    this.logger.log('Fetching Bar chart data');
+    return new Observable(observer => {
+      observer.next(barChart);
+      observer.complete();
+    });
+  }
+
+  getKpis(): Observable<DashboardKpis> {
+    this.logger.log('Fetching KPIs data');
+    return new Observable(observer => {
+      observer.next(dashboardKpis);
+      observer.complete();
+    });
   }
 }

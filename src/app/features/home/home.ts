@@ -8,8 +8,9 @@ import { ChartModule } from 'primeng/chart';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ToastModule } from 'primeng/toast';
 
-import { LineChart, PieChart } from '@domain/models/home/chart';
+import { BarChart, DashboardKpis, LineChart, PieChart } from '@domain/models/home/chart';
 import { GetChartsUseCases } from '@domain/use-cases/home/get-charts-use-case';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -30,35 +31,43 @@ export class Home implements OnInit {
 
   pieChart!: PieChart;
   lineChart!: LineChart;
+  barChart!: BarChart;
+  kpis!: DashboardKpis;
 
   pieChartOptions: ChartOptions<'doughnut'> = {
     plugins: {
       legend: {
         display: true,
-        position: 'top' // posición de la leyenda: 'top', 'bottom', 'left', 'right'
+        position: 'top'
       },
       tooltip: {
         enabled: true,
         mode: 'index'
       }
     },
-    responsive: true, // permite que el gráfico se ajuste al tamaño del contenedor
-    maintainAspectRatio: false // si no deseas mantener la proporción original
+    responsive: true,
+    maintainAspectRatio: false
   };
 
   lineChartOptions: ChartOptions<'line'> = {
     plugins: {
       legend: {
         display: true,
-        position: 'top' // posición de la leyenda: 'top', 'bottom', 'left', 'right'
+        position: 'top'
       },
       tooltip: {
         enabled: true,
         mode: 'index'
       }
     },
-    responsive: true, // permite que el gráfico se ajuste al tamaño del contenedor
-    maintainAspectRatio: true // si no deseas mantener la proporción original
+    responsive: true,
+    maintainAspectRatio: true
+  };
+
+  barChartOptions: ChartOptions<'bar'> = {
+    plugins: { legend: { display: false } },
+    responsive: true,
+    maintainAspectRatio: false
   };
 
   ngOnInit(): void {
@@ -72,47 +81,30 @@ export class Home implements OnInit {
 
   loadElements() {
     this.isLoading = true;
-    this._getCharts.getLineChart().subscribe({
-      next: (data) => {
-        this.lineChart = data;
+
+    forkJoin({
+      line: this._getCharts.getLineChart(),
+      pie: this._getCharts.getPieChart(),
+      bar: this._getCharts.getBarChart(),
+      stats: this._getCharts.getKpis()
+    }).subscribe({
+      next: (results) => {
+        this.lineChart = results.line;
+        this.pieChart = results.pie;
+        this.barChart = results.bar;
+        this.kpis = results.stats;
+        
         this.isLoading = false;
-        this._getCharts.getPieChart().subscribe({
-          next: (data) => {
-            this.pieChart = data;
-            this._messageService.add({
-              severity: 'success',
-              summary: 'Éxito',
-              detail: 'Line chart cargada correctamente!',
-            });
-            this.isLoading = false;
-          },
-          error: (error) => {
-            this._messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: `No se pudieron cargar las tablas: ${error}`,
-            });
-            this.isLoading = false;
-          },
-        })
+        this._messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Dashboard cargado' });
       },
       error: (error) => {
-        this._messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `No se pudieron cargar las tablas: ${error}`,
-        });
         this.isLoading = false;
-      },
+        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Fallo al cargar datos' });
+      }
     });
-  };
+  }
 
   dateChangeHandler() {
-    console.log(this.rangeDates, 'date');
-    this._messageService.add({
-      severity: 'success',
-      summary: 'Éxito',
-      detail: 'Line chart cargada correctamente!',
-    });
-  };
+    this._messageService.add({ severity: 'info', summary: 'Filtro aplicado', detail: 'Datos actualizados' });
+  }
 }

@@ -1,28 +1,95 @@
 <p-toast />
-<section style="display: flex; gap: 10px;">
 
-  <div style="width: 50%;">
-    <p-card >
-      <ng-template pTemplate="header">
-        <h2 class="dialog-header">Ventas</h2>
-      </ng-template>
+@if (isLoading) {
+  <div class="flex justify-content-center align-items-center h-10rem">
+    <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+  </div>
+} @else {
 
-      <div style="margin: 1rem;">
-        <p-datepicker placeholder="Busqueda por fechas" [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" (ngModelChange)="dateChangeHandler()" />
-      </div>
+  <div class="grid mb-4">
+    <div class="col-12 md:col-6 lg:col-3">
+      <p-card class="shadow-1 border-none">
+        <div class="flex justify-content-between mb-3">
+          <div>
+            <span class="block text-500 font-medium mb-3">Ventas Totales</span>
+            <div class="text-900 font-bold text-xl">{{ kpis.totalSales | currency:'MXN':'symbol' }}</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" style="width:2.5rem;height:2.5rem">
+            <i class="pi pi-dollar text-cyan-500 text-xl"></i>
+          </div>
+        </div>
+        <span class="text-green-500 font-medium">+{{ kpis.monthlyGrowth }}% </span>
+        <span class="text-500">desde el mes pasado</span>
+      </p-card>
+    </div>
 
-      <p-chart type="doughnut" [data]="pieChart" [options]="pieChartOptions" style="height: 300px" />
-    </p-card>
+    <div class="col-12 md:col-6 lg:col-3">
+      <p-card class="shadow-1 border-none">
+        <div class="flex justify-content-between mb-3">
+          <div>
+            <span class="block text-500 font-medium mb-3">Clientes Activos</span>
+            <div class="text-900 font-bold text-xl">{{ kpis.activeClients }}</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width:2.5rem;height:2.5rem">
+            <i class="pi pi-users text-orange-500 text-xl"></i>
+          </div>
+        </div>
+        <span class="text-green-500 font-medium">+5 </span>
+        <span class="text-500">esta semana</span>
+      </p-card>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3">
+      <p-card class="shadow-1 border-none">
+        <div class="flex justify-content-between mb-3">
+          <div>
+            <span class="block text-500 font-medium mb-3">Ops. Pendientes</span>
+            <div class="text-900 font-bold text-xl">{{ kpis.pendingOperations }}</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-purple-100 border-round" style="width:2.5rem;height:2.5rem">
+            <i class="pi pi-receipt text-purple-500 text-xl"></i>
+          </div>
+        </div>
+        <span class="text-red-500 font-medium">Requiere atención</span>
+      </p-card>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3 flex align-items-stretch">
+      <p-card class="shadow-1 border-none w-full h-full flex flex-column justify-content-center">
+         <span class="block text-500 font-medium mb-2">Filtrar por periodo</span>
+         <p-datepicker placeholder="Búsqueda por fechas" [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" (ngModelChange)="dateChangeHandler()" class="w-full" />
+      </p-card>
+    </div>
   </div>
 
-  <div style="width: 50%;">
-    <p-card>
-      <ng-template pTemplate="header">
-        <h2 class="dialog-header">Movimientos</h2>
-      </ng-template>
+  <div class="grid mb-4">
+    <div class="col-12 lg:col-4">
+      <p-card class="shadow-1 border-none h-full">
+        <ng-template pTemplate="header">
+          <h3 class="m-0 pt-4 px-4 text-700">Estado de Facturas</h3>
+        </ng-template>
+        <p-chart type="doughnut" [data]="pieChart" [options]="pieChartOptions" height="250px" />
+      </p-card>
+    </div>
 
-      <p-chart type="line" [data]="lineChart" [options]="lineChartOptions" />
-    </p-card>
+    <div class="col-12 lg:col-8">
+      <p-card class="shadow-1 border-none h-full">
+        <ng-template pTemplate="header">
+          <h3 class="m-0 pt-4 px-4 text-700">Movimientos (7 meses)</h3>
+        </ng-template>
+        <p-chart type="line" [data]="lineChart" [options]="lineChartOptions" height="250px" />
+      </p-card>
+    </div>
   </div>
 
-</section>
+  <div class="grid">
+    <div class="col-12">
+      <p-card class="shadow-1 border-none">
+        <ng-template pTemplate="header">
+          <h3 class="m-0 pt-4 px-4 text-700">Volumen por Sucursal</h3>
+        </ng-template>
+        <p-chart type="bar" [data]="barChart" [options]="barChartOptions" height="200px" />
+      </p-card>
+    </div>
+  </div>
+}

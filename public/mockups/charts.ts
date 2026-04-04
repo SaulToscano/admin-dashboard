@@ -1,4 +1,4 @@
-import { LineChart, PieChart } from "@domain/models/home/chart";
+import { BarChart, DashboardKpis, LineChart, PieChart } from "@domain/models/home/chart";
 
 export const pieChart: PieChart = {
   labels: ['Pagado', 'Pendiente', 'Parcialmente pagado'],
@@ -22,7 +22,7 @@ export const lineChart: LineChart = {
       tension: 0.4,
     },
     {
-      label: 'Factoraje realizado',
+      label: 'Productos vendidos',
       data: [28, 48, 40, 19, 86, 27, 90],
       fill: false,
       borderColor: '#f97316',
@@ -36,4 +36,22 @@ export const lineChart: LineChart = {
       tension: 0.4,
     },
   ],
+};
+
+export const barChart: BarChart = {
+  labels: ['Tijuana', 'San Diego', 'Mexicali', 'Ensenada', 'Calexico'],
+  datasets: [
+    {
+      label: 'Operaciones por sucursal',
+      backgroundColor: '#06b6d4',
+      data: [120, 95, 80, 45, 60]
+    }
+  ]
+};
+
+export const dashboardKpis: DashboardKpis = {
+  totalSales: 1250400,
+  activeClients: 142,
+  pendingOperations: 24,
+  monthlyGrowth: 15.5
 };
