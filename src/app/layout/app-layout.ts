@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
   Event,
   NavigationCancel,
@@ -104,33 +104,32 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private layoutService: LayoutService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    let startTime: number = 0;
-
     this.router.events.subscribe((event: Event) => {
+      
       if (event instanceof NavigationStart) {
-        if (event.url === '/login') {
-          startTime = Date.now();
+        if (event.url.includes('/auth/login')) {
           this.loading = true;
         }
-      } else if (
+      } 
+      
+      else if (
         event instanceof NavigationEnd ||
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {
-        const elapsed = Date.now() - startTime;
-        const delay = Math.max(1000 - elapsed, 0);
-        setTimeout(() => {
-          this.loading = false;
-        }, delay);
+        this.loading = false;
+        this.cdr.detectChanges(); // <-- Obligamos a apagar el spinner
       }
 
       if (event instanceof NavigationEnd) {
-        this.showLayout = this.router.url !== '/login';
+        this.showLayout = !this.router.url.includes('/auth/login');
         this.layoutService.setShowLayout(this.showLayout);
       }
+      
     });
   }
 
