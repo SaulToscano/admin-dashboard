@@ -24,8 +24,11 @@ export const routes: Routes = [
   },
   // 3. Ruta Comodín (404 o Redirección)
   {
+    path: 'error',
+    loadChildren: () => import('@features/errors/errors.routes').then(m => m.ERRORS_ROUTES)
+  },
+  {
     path: '**',
-    redirectTo: '', // Si escriben algo raro, los mandamos al Home
-    pathMatch: 'full'
+    redirectTo: 'error/404'
   }
 ];
