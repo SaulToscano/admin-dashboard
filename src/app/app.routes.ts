@@ -11,6 +11,10 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'roles',
+    loadChildren: () => import('./features/roles/roles.routes').then(m => m.ROLES_ROUTES),
+  },
+  {
     path: 'users',
     loadChildren: () => import('./features/users/users.routes').then(m => m.USERS_ROUTES),
   },
