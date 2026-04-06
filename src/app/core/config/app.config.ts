@@ -19,6 +19,9 @@ import { HomeGateway } from '@domain/models/home/gateway/home-gateway';
 import { UserApiService } from '@core/services/user-api.service';
 import { UserGateway } from '@domain/models/user/gateway/user-gateway';
 
+import { ClientApiService } from '@core/services/client-api.service';
+import { ClientGateway } from '@domain/models/client/gateway/client-gateway';
+
 export interface AppConfig {
   apiBaseUrl: string;
   environment: string;
@@ -56,5 +59,6 @@ export const appConfig: ApplicationConfig = {
     // features providers
     { provide: HomeGateway, useClass: HomeApiService },
     { provide: UserGateway, useClass: UserApiService },
+    { provide: ClientGateway, useClass: ClientApiService },
   ],
 };

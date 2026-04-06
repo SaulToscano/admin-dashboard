@@ -14,6 +14,10 @@ export const routes: Routes = [
     path: 'users',
     loadChildren: () => import('./features/users/users.routes').then(m => m.USERS_ROUTES),
   },
+  {
+    path: 'clients',
+    loadChildren: () => import('./features/clients/clients.routes').then(m => m.CLIENTS_ROUTES),
+  },
   // 3. Ruta Comodín (404 o Redirección)
   {
     path: '**',

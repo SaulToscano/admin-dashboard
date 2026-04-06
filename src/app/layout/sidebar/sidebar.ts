@@ -39,6 +39,7 @@ export class SidebarComponent {
 
   adminMenuItem: CustomMenuItem[] = [
     { label: "Usuarios", icon: "pi pi-users", routerLink: "/users" },
+    { label: "Clientes", icon: "pi pi-users", routerLink: "/clients" },
   ];
 
   get filteredMenuItems(): CustomMenuItem[] {
